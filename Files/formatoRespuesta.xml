@@ -1,0 +1,34 @@
+<lista_respuestas>
+<respuesta>
+<fecha> 01/04/2022 </fecha>
+<mensajes>
+<total> 20 </total>
+<positivos> 8 </positivos>
+<negativos> 7 </negativos>
+<neutros> 5 </neutros>
+</mensajes>
+<analisis>
+<empresa nombre="USAC">
+<mensajes>
+<total> 3 </total>
+<positivos> 1 </positivos>
+<negativos> 1 </negativos>
+<neutros> 1 </neutros>
+</mensajes>
+<servicios>
+<servicio nombre="inscripción">
+<mensajes>
+<total> 3 </total>
+<positivos> 1 </positivos>
+<negativos> 1 </negativos>
+<neutros> 1 </neutros>
+</mensajes>
+</servicio>
+...
+</servicios>
+</empresa>
+...
+</analisis>
+</respuesta>
+...
+</lista_respuestas>
