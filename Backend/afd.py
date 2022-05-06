@@ -1,3 +1,4 @@
+
 import re
 from typing import List
 from unicodedata import normalize
@@ -273,7 +274,7 @@ def automata(starter: str):
         
     return tokens
 
-def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
+def scanner(tokens: List[Token],positives,negatives):
     global contador_mensajes
     list_parameters: List[Message] = []
     tmp_messages: list = []
@@ -300,16 +301,10 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
                     and tokens[i+11].token == 'reservada' and tokens[i+11].lexeme.lower() == 'red' \
                     and tokens[i+12].token == 'reservada' and tokens[i+12].lexeme.lower() == 'social' \
                     and tokens[i+13].lexeme == ':' and tokens[i+14].token == 'id':
-                    
-                    
-                  
+            
                     #variables locales reseteables
                     positivo:int  = 0
                     negativo:int = 0
-                    neutro:int = 0
-
-                    corps = ''
-                    services = ''
 
                     txt = []
 
@@ -343,17 +338,6 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
                     elif positivo == negativo:
                         msm.estado = 'Neutro'
 
-                    print(len(empresas.corps))
-
-                    for i in empresas.corps:
-                        print(i.name)
-                        empresa = corpse.get_by_name(i.name)
-                        for k in empresa.services:
-                            print(k.name)
-                            servicio = empresa.services.get_by_name(k.name)
-                            for l in servicio:
-                                print(l.name)  
-                    
                     print('mensaje aniadido')
                     contador_mensajes += 1
 

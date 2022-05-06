@@ -1,8 +1,7 @@
 
 from unicodedata import normalize
 import re
-from Backend.manager import Aka, Corp, Service
-from manager import State,Corps_List
+from manager import State,Corps_List,Corp,Service,Aka
 from flask import Flask, jsonify, request
 from flask.json import jsonify
 
@@ -87,9 +86,19 @@ def extract_datas():
         tokens_list.append(tokens)
         
     for lista in tokens_list:
-        msms = scanner(lista,manage.positive,manage.negative,corpse)
-        for obj in msms:
-            obj.show_messages()
+        msms = scanner(lista,manage.positive,manage.negative)
+    
+    for obj in msms:
+        obj.show_messages()
+        for i in corpse.corps:
+            string = ''
+            print(i.name)
+            asdf = corpse.get_by_name(i.name)
+            string = obj.texto
+            for palabra in string:
+                if palabra == asdf.name:
+                    print('coincidencia')
+                    print(palabra)
 
     return jsonify(corpse.send_datas()), 200
 
