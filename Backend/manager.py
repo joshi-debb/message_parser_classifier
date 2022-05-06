@@ -73,9 +73,6 @@ class Corps_List():
         json = []
         for i in self.corps:
             obj = {'Nombre' : i.name}
-            # list_services = self.get_by_name(i.name).services.send_datas()
-            # for i in list_services:
-            #     list_alias = i.aka.send_datas()
             json.append(obj)
         return json
 
@@ -147,9 +144,5 @@ class Positivo():
         self.palabra = palabra
 
 class Negativo():
-    def __init__(self, palabra):
-        self.palabra = palabra
-
-class Neutro():
     def __init__(self, palabra):
         self.palabra = palabra

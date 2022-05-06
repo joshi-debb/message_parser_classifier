@@ -1,6 +1,7 @@
 
 from unicodedata import normalize
 import re
+from Backend.manager import Aka, Corp, Service
 from manager import State,Corps_List
 from flask import Flask, jsonify, request
 from flask.json import jsonify
@@ -61,10 +62,10 @@ def add():
                 for ser in servicios:
                     servicio = ser.attributes['nombre'].value
                     aliases = ser.getElementsByTagName('alias')
-                    corps = corpse.get_by_name(nombre) 
+                    corps: Corp = corpse.get_by_name(nombre) 
                     corps.services.add_to_end(servicio)
                     for aka in aliases:
-                        aliases = corps.services.get_by_name(servicio)
+                        aliases: Service = corps.services.get_by_name(servicio)
                         alias = aka.firstChild.data
                         aliases.aka.add_to_end(alias)
                         
@@ -89,12 +90,6 @@ def extract_datas():
         msms = scanner(lista,manage.positive,manage.negative,corpse)
         for obj in msms:
             obj.show_messages()
-            # for i in corpse.corps:
-            #     print(i.name)
-            #     for palabra in obj.texto:
-            #         if palabra == i.name:
-            #             print('coincidencia')
-            #         print(palabra)
 
     return jsonify(corpse.send_datas()), 200
 

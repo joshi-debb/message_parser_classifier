@@ -1,9 +1,7 @@
-
-
 import re
 from typing import List
 from unicodedata import normalize
-from manager import State,Corps_List,Message,Response,Token,Errors,Corp
+from manager import State,Corps_List,Message,Token,Errors,Corp
 
 contador_mensajes = 0
 contador_neutrals = 0
@@ -292,16 +290,19 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
             msm = Message()
             for i in range(len(tokens)):
                 #extraer datos
-                if tokens[i].token == 'reservada' and tokens[i].lexeme.lower() == 'lugar' and tokens[i+1].lexeme.lower() == 'y'\
-                    and tokens[i+2].token == 'reservada' and tokens[i+2].lexeme.lower() == 'fecha' and tokens[i+3].lexeme == ':' and tokens[i+4].token == 'id'\
-                        and tokens[i+5].lexeme == ',' and tokens[i+6].token == 'fecha' and tokens[i+7].token == 'hora' and tokens[i+8].token == 'reservada' \
-                            and tokens[i+8].lexeme.lower() == 'usuario' and tokens[i+9].lexeme == ':'  and tokens[i+10].token == 'user' and tokens[i+11].token == 'reservada' \
-                                and tokens[i+11].lexeme.lower() == 'red' and tokens[i+12].token == 'reservada' and tokens[i+12].lexeme.lower() == 'social' \
-                                    and tokens[i+13].lexeme == ':' and tokens[i+14].token == 'id':
+                if tokens[i].token == 'reservada' and tokens[i].lexeme.lower() == 'lugar' \
+                    and tokens[i+1].lexeme.lower() == 'y'and tokens[i+2].token == 'reservada' \
+                    and tokens[i+2].lexeme.lower() == 'fecha' and tokens[i+3].lexeme == ':' \
+                    and tokens[i+4].token == 'id'and tokens[i+5].lexeme == ',' \
+                    and tokens[i+6].token == 'fecha' and tokens[i+7].token == 'hora' \
+                    and tokens[i+8].token == 'reservada' and tokens[i+8].lexeme.lower() == 'usuario' \
+                    and tokens[i+9].lexeme == ':'  and tokens[i+10].token == 'user' \
+                    and tokens[i+11].token == 'reservada' and tokens[i+11].lexeme.lower() == 'red' \
+                    and tokens[i+12].token == 'reservada' and tokens[i+12].lexeme.lower() == 'social' \
+                    and tokens[i+13].lexeme == ':' and tokens[i+14].token == 'id':
                     
                     
-                    #primero evaluar si es positivo o negativo o neutro y luego ver a quien pertenece el mensaje
-                    
+                  
                     #variables locales reseteables
                     positivo:int  = 0
                     negativo:int = 0
@@ -324,19 +325,15 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
                         msm.texto += palabra
                         msm.texto += ' '
                         txt.append(palabra)
-                    
-                    
 
                     for pos in positives:
                         for word in txt:
                             if pos == word:
-                                print('positivaaa')
                                 positivo += 1
 
                     for neg in negatives:
                         for word in txt:
                             if word == neg:
-                                print('negativaaa')
                                 negativo += 1
                             
                     if positivo > negativo:
@@ -355,7 +352,7 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
                             print(k.name)
                             servicio = empresa.services.get_by_name(k.name)
                             for l in servicio:
-                                print(l.name)              
+                                print(l.name)  
                     
                     print('mensaje aniadido')
                     contador_mensajes += 1
