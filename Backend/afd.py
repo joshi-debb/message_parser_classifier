@@ -327,24 +327,24 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
                     
                     
 
-                    # for pos in positives:
-                    #     for word in txt:
-                    #         if pos == word:
-                    #             print('positivaaa')
-                    #             positivo += 1
+                    for pos in positives:
+                        for word in txt:
+                            if pos == word:
+                                print('positivaaa')
+                                positivo += 1
 
-                    # for neg in negatives:
-                    #     for word in txt:
-                    #         if word == neg:
-                    #             print('negativaaa')
-                    #             negativo += 1
+                    for neg in negatives:
+                        for word in txt:
+                            if word == neg:
+                                print('negativaaa')
+                                negativo += 1
                             
-                    # if positivo > negativo:
-                    #     msm.estado = 'Positivo'
-                    # elif positivo < negativo:
-                    #     msm.estado = 'Negativo'
-                    # elif positivo == negativo:
-                    #     msm.estado = 'Neutro'
+                    if positivo > negativo:
+                        msm.estado = 'Positivo'
+                    elif positivo < negativo:
+                        msm.estado = 'Negativo'
+                    elif positivo == negativo:
+                        msm.estado = 'Neutro'
 
                     print(len(empresas.corps))
 
@@ -355,57 +355,7 @@ def scanner(tokens: List[Token],positives,negatives,empresas: Corps_List):
                             print(k.name)
                             servicio = empresa.services.get_by_name(k.name)
                             for l in servicio:
-                                print(l.name)
-
-                    # #recorrer lista de nombres de empresas
-                    # for empresa in corpse.corps:
-                    #     for j in range(14,len(tokens)):
-                    #         if tokens[j].lexeme == empresa.name:
-                    #             corps = corpse.get_by_name(empresa.name)
-                    #             #recorrer lista de palabras positivas, negativas
-                    #             for pos in manage.positive:
-                    #                 for neg in manage.negative:
-                    #                     for k in range(14,len(tokens)):
-                    #                         if tokens[k].lexeme == pos:
-                    #                             positivo += 1
-                    #                         elif tokens[k].lexeme == neg:
-                    #                             negativo += 1
-                    #                         if positivo == 0 and negativo == 0:
-                    #                             neutro += 1
-                    #                         elif positivo == negativo:
-                    #                             neutro += 1
-                        
-                    #     if positivo > negativo:
-                    #         print('El mensaje es positivo')
-                    #         empresa.positive += 1
-                    #     elif positivo < negativo:
-                    #         print('El mensaje es negativo')
-                    #         empresa.negative += 1
-                    #     elif positivo == negativo:
-                    #         print('El mensaje es neutro')
-                    #         empresa.neutral += 1
-                        
-
-                    # for servicio in corps.servieces:
-                    #     if  tokens[j].lexeme == servicio.name:
-                    #         services = corps.services.get_by_name(servicio.name)
-                    #         for alias in services.aka.name:
-                    #             if  tokens[j].lexeme == alias.name:
-                    #                 print()
-
-                    
-                                
-
-                    #     else:
-                    #         contador_neutrals += 1
-
-
-                    
-
-                                    
-
-
-                        
+                                print(l.name)              
                     
                     print('mensaje aniadido')
                     contador_mensajes += 1

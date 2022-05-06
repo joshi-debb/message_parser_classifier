@@ -1,13 +1,3 @@
-class Response:
-    def __init__(self) -> None:
-        self.nombre: str = ''
-        self.usuario: str = ''
-        self.red_social: str = ''
-        self.texto = ''
-        self.total: str = ''
-
-    def show_messages(self):
-        print(' lugar: {}, fecha: {}, hora: {}, usuario: {}, red social: {} , mensaje: {}'.format(self.lugar, self.fecha, self.hora, self.usuario, self.red_social , self.texto))
 
 class Message:
     def __init__(self) -> None:

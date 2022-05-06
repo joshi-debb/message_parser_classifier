@@ -87,8 +87,8 @@ def extract_datas():
         
     for lista in tokens_list:
         msms = scanner(lista,manage.positive,manage.negative,corpse)
-        # for obj in msms:
-        #     obj.show_messages()
+        for obj in msms:
+            obj.show_messages()
             # for i in corpse.corps:
             #     print(i.name)
             #     for palabra in obj.texto:
