@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<solicitud_clasificacion>
+  <diccionario> 
+    <sentimientos_positivos> 
+      	<palabra>bueno</palabra>
+		<palabra>excelente</palabra>
+		<palabra>cool</palabra>
+		<palabra>satisfecho</palabra>
+		<palabra>martavilloso</palabra>
+    </sentimientos_positivos>
+    <sentimientos_negativos> 
+      	<palabra>malo</palabra>
+		<palabra>pesimo</palabra>
+		<palabra>triste</palabra>
+		<palabra>molesto</palabra>
+		<palabra>decepcionado</palabra>
+		<palabra>enojo</palabra>
+		<palabra>enojado</palabra>
+		<palabra>frustrado</palabra>
+    </sentimientos_negativos>
+    <empresas_analizar> 
+      <empresa> 
+        <nombre>USAC</nombre>
+        <servicio nombre="inscripción">  
+		  <alias>inscribí</alias>
+		  <alias>inscrito</alias>
+		</servicio>
+		<servicio nombre="asignación">
+		  <alias>asignado</alias>
+        </servicio>
+        <servicio nombre="graduación"> </servicio>	
+	  </empresa>
+	  <empresa> 
+        <nombre>UMG</nombre>
+        <servicio nombre="parqueo">  
+		  <alias>parquie</alias>
+		</servicio>
+	  </empresa>
+	  <empresa> 
+        <nombre>UVG</nombre>
+        <servicio nombre="juegos">  
+		  <alias>jugue</alias>
+		  <alias>jugamos</alias>
+		</servicio>	
+	  </empresa>
+    </empresas_analizar>
+  </diccionario>
+  <lista_mensajes>
+    <mensaje> 
+      Lugar y fecha: Guatemala, 01/04/2021 15:01 Usuario: 
+	  map0001@usac.edu   Red social: Twitter
+	  El servicio en la USAC para inscripción fue muy bueno y me siento muy satisfecho.
+    </mensaje>
+	<mensaje> 
+      Lugar y fecha: Guatemala, 01/04/2021 15:01 Usuario: 
+	  map0009@usac.edu   Red social: Twitter
+	  Odio el parqueo en la UMG ya que me parquie en un lugar pesimo.
+    </mensaje>
+	<mensaje> 
+      Lugar y fecha: Guatemala, 
+	  01/04/2022 15:20 Usuario: map0002@umg.edu   Red social: Facebook Hoy jugue 
+	  en la UVG, no encontré lugar para jugar y jugamos mal inicié molesto mi proceso, luego tuve que hacer 
+	  cola y me indicaron que era la cola incorrecta, esto me enojó mucho y mejor me fui.
+    </mensaje>
+	<mensaje> 
+      Lugar y fecha : Guatemala, 01/04/2022 15:43 Usuario : map0003  
+	  Red social : WhatsApp
+	  Ya estoy inscrito en la USAC, el proceso fue muy bueno, pero al salir, 
+	  mi carro tenía pinchadas las llantas, esto me preocupó 
+	  y me fui decepcionado.
+    </mensaje>
+	<mensaje> 
+      Lugar y fecha : Guatemala, 01/04/2022 15:43 Usuario : map0008  
+	  Red social : WhatsApp
+	  Me gusta la USAC
+    </mensaje>
+	<mensaje> 
+		Lugar y fecha : Guatemala, 01/05/2022 15:43 Usuario : map1008  
+		Red social : Linkedin
+		Hoy gano mi equipo :D
+	</mensaje>
+  </lista_mensajes>
+</solicitud_clasificacion>

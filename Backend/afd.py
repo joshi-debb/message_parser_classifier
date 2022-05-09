@@ -1,18 +1,13 @@
 
+
 import re
 from typing import List
 from unicodedata import normalize
-from manager import State,Corps_List,Message,Token,Errors,Corp
+from manager import State,Corps_List,Message,Token,Errors,Corp,Service,Aka,Date
 
-contador_mensajes = 0
-contador_neutrals = 0
-
-mensaje_positivo = 0
-mensaje_negativo = 0
-mensaje_neutro = 0
-
-manage = State()
-corpse = Corps_List()
+msm_positivos = 0
+msm_negativos = 0
+msm_neutros = 0
 
 
 def automata(starter: str):
@@ -91,7 +86,7 @@ def automata(starter: str):
                     lexeme = ''
             else:
                 # if((ord(char) >= 48 and ord(char) <= 57) or ord(char) == 95 or ord(char) == 46 or ord(char) == 64):
-                if((ord(char) >= 48 and ord(char) <= 57)):
+                if((ord(char) >= 48 and ord(char) <= 57 or ord(char) == 95 or ord(char) == 46 or ord(char) == 64 or ord(char) == 35)):
                     state = 3
                     pointer += 1
                     col += 1
@@ -104,7 +99,7 @@ def automata(starter: str):
         #estado 3
         elif state == 3:
             if((ord(char) >= 65 and ord(char) <= 90) or (ord(char) >= 97 and ord(char) <= 122) or ord(char) == 164 \
-                or ord(char) == 165 or (ord(char) >= 48 and ord(char) <= 57) or ord(char) == 95 or ord(char) == 46 or ord(char) == 64):
+                or ord(char) == 165 or (ord(char) >= 48 and ord(char) <= 57) or ord(char) == 95 or ord(char) == 46 or ord(char) == 64 or ord(char) == 35):
                 pointer += 1
                 col += 1
                 lexeme += char
@@ -274,8 +269,10 @@ def automata(starter: str):
         
     return tokens
 
-def scanner(tokens: List[Token],positives,negatives):
-    global contador_mensajes
+def scanner(tokens: List[Token],positives,negatives,empresa: Corps_List):
+
+    global msm_positivos,msm_negativos,msm_neutros
+
     list_parameters: List[Message] = []
     tmp_messages: list = []
     messages: list = []
@@ -286,22 +283,22 @@ def scanner(tokens: List[Token],positives,negatives):
             tmp_messages.append(new_msms)
             continue
         tmp_messages[-1].append(tokens[i])
-    try:
+    # try:
         for messages in tmp_messages:
             msm = Message()
             for i in range(len(tokens)):
                 #extraer datos
                 if tokens[i].token == 'reservada' and tokens[i].lexeme.lower() == 'lugar' \
-                    and tokens[i+1].lexeme.lower() == 'y'and tokens[i+2].token == 'reservada' \
+                    and tokens[i+1].lexeme.lower() == 'y' and tokens[i+2].token == 'reservada' \
                     and tokens[i+2].lexeme.lower() == 'fecha' and tokens[i+3].lexeme == ':' \
-                    and tokens[i+4].token == 'id'and tokens[i+5].lexeme == ',' \
+                    and tokens[i+4].token == 'id' and tokens[i+5].lexeme == ',' \
                     and tokens[i+6].token == 'fecha' and tokens[i+7].token == 'hora' \
                     and tokens[i+8].token == 'reservada' and tokens[i+8].lexeme.lower() == 'usuario' \
-                    and tokens[i+9].lexeme == ':'  and tokens[i+10].token == 'user' \
+                    and tokens[i+9].lexeme == ':' and (tokens[i+10].token == 'user' or tokens[i+10].token == 'id') \
                     and tokens[i+11].token == 'reservada' and tokens[i+11].lexeme.lower() == 'red' \
                     and tokens[i+12].token == 'reservada' and tokens[i+12].lexeme.lower() == 'social' \
                     and tokens[i+13].lexeme == ':' and tokens[i+14].token == 'id':
-            
+
                     #variables locales reseteables
                     positivo:int  = 0
                     negativo:int = 0
@@ -323,27 +320,76 @@ def scanner(tokens: List[Token],positives,negatives):
 
                     for pos in positives:
                         for word in txt:
-                            if pos == word:
+                            if pos.lower() == word.lower():
                                 positivo += 1
 
                     for neg in negatives:
                         for word in txt:
-                            if word == neg:
+                            if word.lower() == neg.lower():
                                 negativo += 1
                             
                     if positivo > negativo:
                         msm.estado = 'Positivo'
+                        msm_positivos += 1
+                        msm.positivos += 1
                     elif positivo < negativo:
                         msm.estado = 'Negativo'
+                        msm_negativos += 1
+                        msm.negativos += 1
                     elif positivo == negativo:
                         msm.estado = 'Neutro'
+                        msm_neutros += 1
+                        msm.neutros += 1
 
-                    print('mensaje aniadido')
-                    contador_mensajes += 1
+                    if empresa != None:
+                        for corp in empresa.corps:
+                            corp: Corp
+                            for word in txt:
+                                if word.upper() == corp.name.upper():
+                                    if msm.estado == 'Positivo':
+                                        corp.positive += 1
+                                        print('Empresa {} positivo {}:'.format(corp.name,corp.positive))
+                                    elif msm.estado == 'Negativo':
+                                        corp.negative += 1
+                                        print('Empresa {} negativo {}:'.format(corp.name,corp.negative))
+                                    elif msm.estado == 'Neutro':
+                                        corp.neutral += 1
+                                        print('Empresa {} neutro {}:'.format(corp.name,corp.neutral))
+                                    
+
+                            for serv in corp.services.servis:
+                                serv: Service
+                                for word in txt:
+                                    if word.lower() == serv.name.lower():
+                                        if msm.estado == 'Positivo':
+                                            serv.positive += 1
+                                            print('Servicio {} positivo {}:'.format(serv.name,serv.positive))
+                                        elif msm.estado == 'Negativo':
+                                            serv.negative += 1
+                                            print('Servicio {} negativo {}:'.format(serv.name,serv.negative))
+                                        elif msm.estado == 'Neutro':
+                                            serv.neutral += 1
+                                            print('Servicio {} neutro {}:'.format(serv.name,serv.neutral))
+
+                                for aka in serv.aka.akas:
+                                    aka: Aka
+                                    for word in txt:
+                                        if word.lower() == aka.name.lower():
+                                            if msm.estado == 'Positivo':
+                                                serv.positive += 1
+                                                print('AKA Servicio {} positivo {}:'.format(aka.name,serv.positive))
+                                            elif msm.estado == 'Negativo':
+                                                serv.negative += 1
+                                                print('AKA Servicio {} negativo {}:'.format(aka.name,serv.negative))
+                                            elif msm.estado == 'Neutro':
+                                                serv.neutral += 1
+                                                print('AKA Servicio {} neutro {}:'.format(aka.name,serv.neutral))
+                                    
+                        print('mensaje aniadido')
 
                     break
 
             list_parameters.append(msm)
-        return list_parameters
-    except:
-        messages = 'null'
+        return list_parameters,msm_positivos,msm_negativos,msm_neutros,txt
+    # except:
+    #     messages = 'null'

@@ -1,0 +1,56 @@
+{% extends 'base_layout.html' %} {% block content %}
+<div class="row">
+  <div class="col-6 p-3 border">
+    <h2 class="text-center">Entrada</h2>
+    <div class="form-floating">
+      <textarea
+        class="form-control"
+        name="input"
+        id="input"
+        style="height: 55vh"
+        readonly
+      ></textarea>
+    </div>
+  </div>
+  <div class="col-6 p-3 border">
+    <h2 class="text-center">Salida</h2>
+    <div class="form-floating">
+      <textarea
+        class="form-control"
+        name="output"
+        id="output"
+        style="height: 55vh"
+        readonly
+ >{{ output }}</textarea >
+    </div>
+  </div>
+</div>
+<div class="row p-3">
+  <form method="POST" class="row row-cols-auto p-2" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-8">
+      <input type="file" name="document" id="document" class="form-control form-control-sm"/>
+    </div>
+    <div class="col-2 d-grid gap-2 mx-auto">
+      <input type="submit" value="Enviar" class="btn btn-sm btn-primary" />
+    </div>
+    <div class="col-2 d-grid gap-2 mx-auto">
+      <button id="reset-button" type="reset" class="btn btn-sm btn-danger">
+        Reiniciar
+      </button>
+    </div>
+  </form>
+  <!-- <div class="col-lg-2 d-grid gap-2 mx-auto">
+    <button id="send-button" type="button" class="btn btn-sm btn-primary">
+      Enviar
+    </button>
+  </div>
+  <div class="col-lg-2 d-grid gap-2 mx-auto">
+    <button id="reset-button" type="button" class="btn btn-sm btn-danger">
+      Reiniciar
+    </button>
+  </div> -->
+</div>
+{% endblock content %} {% block script %} {{ block.super }} {% load static %}
+<script src="{% static 'index.js' %}"></script>
+{% endblock script %}

@@ -1,4 +1,11 @@
 
+class Date:
+    def __init__(self) -> None:
+        self.fecha: str = ''
+        self.positivos = 0
+        self.negativos = 0
+        self.neutros = 0
+
 class Message:
     def __init__(self) -> None:
         self.lugar: str = ''
@@ -7,7 +14,11 @@ class Message:
         self.usuario: str = ''
         self.red_social: str = ''
         self.texto = ''
+        self.positivos = 0
+        self.negativos = 0
+        self.neutros = 0
         self.estado = ''
+
 
     def show_messages(self):
         print(' lugar: {}, fecha: {}, hora: {}, usuario: {}, red social: {}, mensaje: {} estado: {}'.format(self.lugar, self.fecha, self.hora, self.usuario, self.red_social , self.texto, self.estado))
@@ -38,9 +49,27 @@ class State():
 
     def add_positive(self,word):
         self.positive.append(word)
+    
+    def send_datas_pos(self):
+        json = []
+        for i in self.positive:
+            obj = {
+                'Palabra Positiva' : i, 
+                }
+            json.append(obj)
+        return json
 
     def add_negative(self,word):
         self.negative.append(word)
+    
+    def send_datas_neg(self):
+        json = []
+        for i in self.negative:
+            obj = {
+                'Palabra Negativa' : i, 
+                }
+            json.append(obj)
+        return json
 
 class Corp:
     def __init__(self,name):
@@ -49,7 +78,7 @@ class Corp:
         self.positive: int = 0
         self.negative: int  = 0
         self.neutral: int = 0
-        self.total = int(self.positive) + int(self.negative) + int(self.neutral)
+        self.total: int = 0
 
 class Corps_List():
     def __init__(self) -> None:
@@ -72,7 +101,10 @@ class Corps_List():
     def send_datas(self):
         json = []
         for i in self.corps:
-            obj = {'Nombre' : i.name}
+            obj = {
+                'Empresa' : i.name , 
+                'Servicios' : self.get_by_name(i.name).services.send_datas()
+                }
             json.append(obj)
         return json
 
@@ -83,30 +115,33 @@ class Service:
         self.positive: int = 0
         self.negative: int  = 0
         self.neutral: int = 0
-        self.total = int(self.positive) + int(self.negative) + int(self.neutral)
+        self.total: int = 0
 
 class Service_List():
     def __init__(self) -> None:
-        self.services = []
+        self.servis = []
     
     def add_to_end(self,name):
         new = Service(name)
-        self.services.append(new)
+        self.servis.append(new)
     
     def get_by_name(self,name):
-        for i in range(len(self.services)):
-            if self.services[i].name == name:
-                return self.services[i]
+        for i in range(len(self.servis)):
+            if self.servis[i].name == name:
+                return self.servis[i]
     
     def show_services(self):
-        for i in range(len(self.services)):
-            print(self.services[i].name)
-            return self.services[i]
+        for i in range(len(self.servis)):
+            print(self.servis[i].name)
+            return self.servis[i]
                
     def send_datas(self):
         json = []
-        for i in self.services:
-            obj = {'Nombre' : i.name}
+        for i in self.servis:
+            obj = {
+                'Servicio' : i.name , 
+                'Aliases' : self.get_by_name(i.name).aka.send_datas()
+                }
             json.append(obj)
         return json
 
@@ -135,7 +170,9 @@ class Akas_List():
     def send_datas(self):
         json = []
         for i in self.akas:
-            obj = {'Nombre' : i.name}
+            obj = {
+                'Alias' : i.name
+                }
             json.append(obj)
         return json
 
